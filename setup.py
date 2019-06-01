@@ -23,11 +23,7 @@ setup(
         'Programming Language :: Python :: 3.6'],
     install_requires=[ #TODO: trim the unused dependencies.
         # 'numpy',
-        # 'pandas',
-        # 'scipy',
-        # 'matplotlib',
-        # 'pymysql',
-        # 'sqlalchemy'
+        # 'matplotlib'
     ],
     extras_require={
         # 'dev': ['ipython', 'sklearn', 'statsmodels']
