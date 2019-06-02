@@ -5,13 +5,20 @@
 %load_ext autoreload
 %autoreload 2
 
-from collections import namedtuple
-from fragprots.formula import Formula
+from fragprots.charged_isomer import ChargedIsomer
+
+q_iso = ChargedIsomer('C100H202', 3)
+x = q_iso + q_iso
+x + 'C100H200'
+x + 'H'
+x.q = 0
+x
+x.q = +1
+
+ChargedIsomer(Formula('C100H202'), 3)
 
 # this is the best ideas for qisomer.
-qIsomer = namedtuple("qIsomer", ["q", "formula"])
-qi = qIsomer(10, Formula('C100H202'))
-qi.formula + 'H1'
+qi.formula + 'H'
 
 
 # formulas need to be hashable.
@@ -20,9 +27,6 @@ qi.formula + 'H1'
 # addition of two formulas should give new formula
 
 
-id(qi)
-qi.formula['C']
-qi.formula[1]
 
 
 
