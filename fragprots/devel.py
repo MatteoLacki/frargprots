@@ -5,38 +5,13 @@
 %load_ext autoreload
 %autoreload 2
 
-from collections import Counter, namedtuple, frozendict
-??namedtuple
-
-import re
-
-
-
-formula = "H200C100"
-formula_patern = re.compile('([A-Z][a-z]?)([0-9]*)')
-
-
-a = {'C':1, 'H':2}
-b = {'H':2, 'C':1}
-for i in a:
-	print(i)
-
-from fragprots.ptms import ptms
-f + ptms["phosphorylation"]
-
-
-def add(a, b):
-
-%%timeit
-x = list(re.findall(formula_patern, formula))
-
-{
-
+from collections import namedtuple
+from fragprots.formula import Formula
 
 # this is the best ideas for qisomer.
 qIsomer = namedtuple("qIsomer", ["q", "formula"])
-qi = qIsomer(10, Counter({'C':1, 'H':2}))
-
+qi = qIsomer(10, Formula('C100H202'))
+qi.formula + 'H1'
 
 
 # formulas need to be hashable.

@@ -21,7 +21,7 @@ setup(
         'Topic :: Scientific/Engineering :: Chemistry',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6'],
-    install_requires=[ #TODO: trim the unused dependencies.
+    install_requires=[
         # 'numpy',
         # 'matplotlib'
     ],

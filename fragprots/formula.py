@@ -1,23 +1,29 @@
 import re
 
-
-# Maybe this pattern should be more general, to encompass chemical diffs?
-# Or maybe there shouldn't be any chemical diffs?
-# Or keep chemical diffs only as strings and make it impossible to accept anything like that?
 formula_patern = re.compile(r"([A-Z][a-z]?)(-?\d*)")
-#TODO: add support for CH things.
-
-# formula = 'C100H200Mg'
-# ?re.findall
-# for el, cnt in re.findall(formula_patern, formula):
-#     print(el, int(cnt))
 
 
 class NegativeAtomCount(Exception):
     pass
 
 def str2dict(formula):
-    return {el: int(cnt) for el, cnt in re.findall(formula_patern, formula)}
+    """Represent a string chemical formula as a dictonay.
+    
+    Arguments:
+        formula (str): A chemical formula, like 'C100H202' or 'CO2H'.
+    """
+    res = {}
+    for el, cnt in re.findall(formula_patern, formula):
+        cnt = int(cnt) if cnt else 1
+        res[el] = res.get(el, 0) + cnt
+    return res
+
+
+def test_str2dict():
+    assert str2dict('C100H202') == {'C':100, 'H':202}
+    assert str2dict('COOH') == {'C':1, 'O':2, 'H':1}
+    assert str2dict('C2O1H5(OH)') == {'C':2, 'O':2, 'H':6}
+
 
 def dict2str(formula):
     return "".join(el + str(cnt) for el, cnt in sorted(formula.items()))
@@ -36,7 +42,8 @@ class Formula(dict):
         """
         # only string needs to be sorted.
         if isinstance(formula, str):
-            super().__init__(((el,int(cnt)) for el, cnt in re.findall(formula_patern, formula)))
+            super().__init__(((el, int(cnt)) if cnt else (el, 1)
+                              for el, cnt in re.findall(formula_patern, formula)))
         else: # copy constructor
             super().__init__(((f, int(formula[f])) for f in formula))
 
