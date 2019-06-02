@@ -1,5 +1,7 @@
-from .formula import Formula, dict2str
+import re
 
+from .formula import Formula, dict2str
+# TODO: maybe also make it possible to accept "HNO-" and such things.
 
 class ChargedIsomer(Formula):
 	"""A class representing a charged isomer."""
@@ -8,7 +10,12 @@ class ChargedIsomer(Formula):
 		try:
 			self.q = formula.q
 		except AttributeError:
-			self.q = q
+			try:
+				self.q = int(formula.split("^")[1])
+			except IndexError:
+				self.q = q
+			except AttributeError: # no .split() method
+				self.q = q
 
 	def __hash__(self):
 		return hash( (dict2str(self), self.q) )
@@ -29,3 +36,9 @@ class ChargedIsomer(Formula):
 		except AttributeError:
 			pass
 		return out
+
+
+def test_charged_isomers():
+	q_iso = ChargedIsomer('C100H202', 3)
+	assert str(q_iso + q_iso) == 'C200H404^+6'
+	assert q_iso + "H^+1" == 'C100H202^+4'
